@@ -179,11 +179,15 @@ const start = async () => {
     runningStatus.value = 'pending'
     output.value = ''
     const prompt = await prompts[props.type](props.selectedText)
+    const toolConfig = userConfig.writingTools[props.type]
+    const temperature = toolConfig.temperature.get()
+    const reasoning = toolConfig.reasoningEnabled.get()
     const iter = streamTextInBackground({
       prompt: prompt.user.extractText(),
       system: prompt.system,
       abortSignal: abortController.signal,
-      autoThinking: true,
+      temperature,
+      reasoning,
     })
     for await (const chunk of iter) {
       if (chunk.type === 'text-delta') {

@@ -112,7 +112,7 @@ const normalizeError = (_error: unknown, endpointType?: LLMEndpointType) => {
   return error
 }
 
-const streamText = async (options: Pick<StreamTextOptions, 'messages' | 'prompt' | 'system' | 'maxTokens' | 'topK' | 'topP'> & ExtraGenerateOptionsWithTools) => {
+const streamText = async (options: Pick<StreamTextOptions, 'messages' | 'prompt' | 'system' | 'maxTokens' | 'temperature' | 'topK' | 'topP'> & ExtraGenerateOptionsWithTools) => {
   const abortController = new AbortController()
   const portName = `streamText-${Date.now().toString(32)}`
   const onStart = async (port: Browser.runtime.Port) => {
@@ -137,10 +137,10 @@ const streamText = async (options: Pick<StreamTextOptions, 'messages' | 'prompt'
         messages: options.messages,
         prompt: options.prompt,
         system: options.system,
-        // this is a trick workaround to use prompt based tools in the vercel ai sdk
         tools: PromptBasedTool.createFakeAnyTools(),
         experimental_activeTools: [],
         maxTokens: options.maxTokens,
+        temperature: options.temperature,
         abortSignal: abortController.signal,
       })
       for await (const chunk of response.fullStream) {

@@ -188,18 +188,26 @@ export async function _getUserConfig() {
       rewrite: {
         enable: await new Config('writingTools.rewrite.enable').default(true).build(),
         systemPrompt: await new Config('writingTools.rewrite.systemPrompt').default(DEFAULT_WRITING_TOOLS_REWRITE_SYSTEM_PROMPT).build(),
+        temperature: await new Config('writingTools.rewrite.temperature').default(0.3).build(),
+        reasoningEnabled: await new Config('writingTools.rewrite.reasoningEnabled').default(false).build(),
       },
       proofread: {
         enable: await new Config('writingTools.proofread.enable').default(true).build(),
         systemPrompt: await new Config('writingTools.proofread.systemPrompt').default(DEFAULT_WRITING_TOOLS_PROOFREAD_SYSTEM_PROMPT).build(),
+        temperature: await new Config('writingTools.proofread.temperature').default(0.3).build(),
+        reasoningEnabled: await new Config('writingTools.proofread.reasoningEnabled').default(false).build(),
       },
       list: {
         enable: await new Config('writingTools.list.enable').default(true).build(),
         systemPrompt: await new Config('writingTools.list.systemPrompt').default(DEFAULT_WRITING_TOOLS_LIST_SYSTEM_PROMPT).build(),
+        temperature: await new Config('writingTools.list.temperature').default(0.3).build(),
+        reasoningEnabled: await new Config('writingTools.list.reasoningEnabled').default(false).build(),
       },
       sparkle: {
         enable: await new Config('writingTools.sparkle.enable').default(true).build(),
         systemPrompt: await new Config('writingTools.sparkle.systemPrompt').default(DEFAULT_WRITING_TOOLS_SPARKLE_SYSTEM_PROMPT).build(),
+        temperature: await new Config('writingTools.sparkle.temperature').default(0.3).build(),
+        reasoningEnabled: await new Config('writingTools.sparkle.reasoningEnabled').default(false).build(),
       },
     },
     settings: {

@@ -299,7 +299,11 @@
           "description": "Thêm emoji và các yếu tố hình ảnh",
           "title": "Làm đẹp"
         },
-        "title": "Cấu hình Công cụ"
+        "title": "Cấu hình Công cụ",
+        "temperature": "Temperature",
+        "temperature_desc": "Controls randomness (0 = deterministic, 1 = creative). Recommended: 0.3 for writing, 0.7 for creative tasks",
+        "enable_reasoning": "Enable deep thinking / reasoning",
+        "enable_reasoning_desc": "Small local models may hang with reasoning enabled. Keep disabled for Writing Tools"
       }
     },
     "chat": {

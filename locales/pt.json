@@ -299,7 +299,11 @@
           "description": "Adicione emojis e elementos visuais",
           "title": "Embelezar"
         },
-        "title": "Configuração de Ferramenta"
+        "title": "Configuração de Ferramenta",
+        "temperature": "Temperature",
+        "temperature_desc": "Controls randomness (0 = deterministic, 1 = creative). Recommended: 0.3 for writing, 0.7 for creative tasks",
+        "enable_reasoning": "Enable deep thinking / reasoning",
+        "enable_reasoning_desc": "Small local models may hang with reasoning enabled. Keep disabled for Writing Tools"
       }
     },
     "chat": {

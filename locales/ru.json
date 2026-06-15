@@ -299,7 +299,11 @@
           "description": "Добавьте эмодзи и визуальные элементы",
           "title": "Украшение"
         },
-        "title": "Конфигурация инструмента"
+        "title": "Конфигурация инструмента",
+        "temperature": "Temperature",
+        "temperature_desc": "Controls randomness (0 = deterministic, 1 = creative). Recommended: 0.3 for writing, 0.7 for creative tasks",
+        "enable_reasoning": "Enable deep thinking / reasoning",
+        "enable_reasoning_desc": "Small local models may hang with reasoning enabled. Keep disabled for Writing Tools"
       }
     },
     "chat": {

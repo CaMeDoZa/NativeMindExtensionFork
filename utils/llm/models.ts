@@ -67,7 +67,13 @@ export async function getModel(options: {
     const isCurrentGptOss = isGptOssModel(currentModel)
     const reasoningValue = options.reasoning
     let thinkValue: ReasoningOption | undefined
-    if (supportsThinking && reasoningValue !== undefined) {
+    // Bulletproof: if reasoning is explicitly false, force think: false
+    // regardless of supportsThinking or supportsToggleThinking.
+    // This prevents models from defaulting to thinking mode.
+    if (reasoningValue === false) {
+      thinkValue = false
+    }
+    else if (supportsThinking && reasoningValue !== undefined) {
       if (isCurrentGptOss) {
         thinkValue = reasoningValue
       }

@@ -299,7 +299,11 @@
           "description": "絵文字と視覚的要素を追加する",
           "title": "美化"
         },
-        "title": "ツール設定"
+        "title": "ツール設定",
+        "temperature": "Temperature",
+        "temperature_desc": "Controls randomness (0 = deterministic, 1 = creative). Recommended: 0.3 for writing, 0.7 for creative tasks",
+        "enable_reasoning": "Enable deep thinking / reasoning",
+        "enable_reasoning_desc": "Small local models may hang with reasoning enabled. Keep disabled for Writing Tools"
       }
     },
     "chat": {

@@ -37,108 +37,295 @@
         :disabled="!enabledWritingTools"
       >
         <div class="flex flex-col gap-4">
-          <div class="flex gap-2 items-start">
-            <div class="p-1">
-              <Checkbox v-model="enableRewrite" />
-            </div>
-            <div>
-              <div class="flex gap-[10px] items-center flex-wrap">
+          <!-- Rewrite -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-start">
+              <div class="p-1">
+                <Checkbox v-model="enableRewrite" />
+              </div>
+              <div class="flex-1">
+                <div class="flex gap-[10px] items-center flex-wrap">
+                  <Text
+                    display="block"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.rewrite.title') }}
+                  </Text>
+                  <WarningMessage
+                    v-if="rewriteErrorMessage"
+                    :message="rewriteErrorMessage"
+                  />
+                </div>
                 <Text
                   display="block"
+                  color="secondary"
                   size="xs"
                 >
-                  {{ t('settings.writing_tools.tool_config.rewrite.title') }}
+                  {{ t('settings.writing_tools.tool_config.rewrite.description') }}
                 </Text>
-                <WarningMessage
-                  v-if="rewriteErrorMessage"
-                  :message="rewriteErrorMessage"
-                />
+                <div class="flex flex-col gap-2 pl-1 pt-2">
+                  <div class="flex items-center gap-3">
+                    <label class="text-xs text-text-secondary whitespace-nowrap min-w-[80px]">{{ t('settings.writing_tools.tool_config.temperature') }}</label>
+                    <Input
+                      v-model.number="rewriteTemperature"
+                      type="number"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="rounded-md py-1.5 px-2 w-20 text-xs"
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="flex-1 h-1 accent-[var(--color-accent)]"
+                      :value="rewriteTemperature"
+                      @input="rewriteTemperature = parseFloat(($event.target as HTMLInputElement).value)"
+                    >
+                  </div>
+                  <Text
+                    color="secondary"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.temperature_desc') }}
+                  </Text>
+                  <div class="flex items-center gap-2">
+                    <Checkbox v-model="rewriteReasoningEnabled" />
+                    <div>
+                      <Text size="xs">
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning') }}
+                      </Text>
+                      <Text
+                        color="secondary"
+                        size="xs"
+                      >
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning_desc') }}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <SavedMessage :watch="[rewriteTemperature, rewriteReasoningEnabled]" />
               </div>
-              <Text
-                display="block"
-                color="secondary"
-                size="xs"
-              >
-                {{ t('settings.writing_tools.tool_config.rewrite.description') }}
-              </Text>
             </div>
           </div>
-          <div class="flex gap-2 items-start">
-            <div class="p-1">
-              <Checkbox v-model="enableProofread" />
-            </div>
-            <div>
-              <div class="flex gap-[10px] items-center flex-wrap">
+
+          <!-- Proofread -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-start">
+              <div class="p-1">
+                <Checkbox v-model="enableProofread" />
+              </div>
+              <div class="flex-1">
+                <div class="flex gap-[10px] items-center flex-wrap">
+                  <Text
+                    display="block"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.proofread.title') }}
+                  </Text>
+                  <WarningMessage
+                    v-if="proofreadErrorMessage"
+                    :message="proofreadErrorMessage"
+                  />
+                </div>
                 <Text
                   display="block"
+                  color="secondary"
                   size="xs"
                 >
-                  {{ t('settings.writing_tools.tool_config.proofread.title') }}
+                  {{ t('settings.writing_tools.tool_config.proofread.description') }}
                 </Text>
-                <WarningMessage
-                  v-if="proofreadErrorMessage"
-                  :message="proofreadErrorMessage"
-                />
+                <div class="flex flex-col gap-2 pl-1 pt-2">
+                  <div class="flex items-center gap-3">
+                    <label class="text-xs text-text-secondary whitespace-nowrap min-w-[80px]">{{ t('settings.writing_tools.tool_config.temperature') }}</label>
+                    <Input
+                      v-model.number="proofreadTemperature"
+                      type="number"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="rounded-md py-1.5 px-2 w-20 text-xs"
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="flex-1 h-1 accent-[var(--color-accent)]"
+                      :value="proofreadTemperature"
+                      @input="proofreadTemperature = parseFloat(($event.target as HTMLInputElement).value)"
+                    >
+                  </div>
+                  <Text
+                    color="secondary"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.temperature_desc') }}
+                  </Text>
+                  <div class="flex items-center gap-2">
+                    <Checkbox v-model="proofreadReasoningEnabled" />
+                    <div>
+                      <Text size="xs">
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning') }}
+                      </Text>
+                      <Text
+                        color="secondary"
+                        size="xs"
+                      >
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning_desc') }}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <SavedMessage :watch="[proofreadTemperature, proofreadReasoningEnabled]" />
               </div>
-              <Text
-                display="block"
-                color="secondary"
-                size="xs"
-              >
-                {{ t('settings.writing_tools.tool_config.proofread.description') }}
-              </Text>
             </div>
           </div>
-          <div class="flex gap-2 items-start">
-            <div class="p-1">
-              <Checkbox v-model="enableList" />
-            </div>
-            <div>
-              <div class="flex gap-[10px] items-center flex-wrap">
+
+          <!-- List -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-start">
+              <div class="p-1">
+                <Checkbox v-model="enableList" />
+              </div>
+              <div class="flex-1">
+                <div class="flex gap-[10px] items-center flex-wrap">
+                  <Text
+                    display="block"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.list.title') }}
+                  </Text>
+                  <WarningMessage
+                    v-if="listErrorMessage"
+                    :message="listErrorMessage"
+                  />
+                </div>
                 <Text
                   display="block"
+                  color="secondary"
                   size="xs"
                 >
-                  {{ t('settings.writing_tools.tool_config.list.title') }}
+                  {{ t('settings.writing_tools.tool_config.list.description') }}
                 </Text>
-                <WarningMessage
-                  v-if="listErrorMessage"
-                  :message="listErrorMessage"
-                />
+                <div class="flex flex-col gap-2 pl-1 pt-2">
+                  <div class="flex items-center gap-3">
+                    <label class="text-xs text-text-secondary whitespace-nowrap min-w-[80px]">{{ t('settings.writing_tools.tool_config.temperature') }}</label>
+                    <Input
+                      v-model.number="listTemperature"
+                      type="number"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="rounded-md py-1.5 px-2 w-20 text-xs"
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="flex-1 h-1 accent-[var(--color-accent)]"
+                      :value="listTemperature"
+                      @input="listTemperature = parseFloat(($event.target as HTMLInputElement).value)"
+                    >
+                  </div>
+                  <Text
+                    color="secondary"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.temperature_desc') }}
+                  </Text>
+                  <div class="flex items-center gap-2">
+                    <Checkbox v-model="listReasoningEnabled" />
+                    <div>
+                      <Text size="xs">
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning') }}
+                      </Text>
+                      <Text
+                        color="secondary"
+                        size="xs"
+                      >
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning_desc') }}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <SavedMessage :watch="[listTemperature, listReasoningEnabled]" />
               </div>
-              <Text
-                display="block"
-                color="secondary"
-                size="xs"
-              >
-                {{ t('settings.writing_tools.tool_config.list.description') }}
-              </Text>
             </div>
           </div>
-          <div class="flex gap-2 items-start">
-            <div class="p-1">
-              <Checkbox v-model="enableSparkle" />
-            </div>
-            <div>
-              <div class="flex gap-[10px] items-center flex-wrap">
+
+          <!-- Sparkle -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-start">
+              <div class="p-1">
+                <Checkbox v-model="enableSparkle" />
+              </div>
+              <div class="flex-1">
+                <div class="flex gap-[10px] items-center flex-wrap">
+                  <Text
+                    display="block"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.sparkle.title') }}
+                  </Text>
+                  <WarningMessage
+                    v-if="sparkleErrorMessage"
+                    :message="sparkleErrorMessage"
+                  />
+                </div>
                 <Text
                   display="block"
+                  color="secondary"
                   size="xs"
                 >
-                  {{ t('settings.writing_tools.tool_config.sparkle.title') }}
+                  {{ t('settings.writing_tools.tool_config.sparkle.description') }}
                 </Text>
-                <WarningMessage
-                  v-if="sparkleErrorMessage"
-                  :message="sparkleErrorMessage"
-                />
+                <div class="flex flex-col gap-2 pl-1 pt-2">
+                  <div class="flex items-center gap-3">
+                    <label class="text-xs text-text-secondary whitespace-nowrap min-w-[80px]">{{ t('settings.writing_tools.tool_config.temperature') }}</label>
+                    <Input
+                      v-model.number="sparkleTemperature"
+                      type="number"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="rounded-md py-1.5 px-2 w-20 text-xs"
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      class="flex-1 h-1 accent-[var(--color-accent)]"
+                      :value="sparkleTemperature"
+                      @input="sparkleTemperature = parseFloat(($event.target as HTMLInputElement).value)"
+                    >
+                  </div>
+                  <Text
+                    color="secondary"
+                    size="xs"
+                  >
+                    {{ t('settings.writing_tools.tool_config.temperature_desc') }}
+                  </Text>
+                  <div class="flex items-center gap-2">
+                    <Checkbox v-model="sparkleReasoningEnabled" />
+                    <div>
+                      <Text size="xs">
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning') }}
+                      </Text>
+                      <Text
+                        color="secondary"
+                        size="xs"
+                      >
+                        {{ t('settings.writing_tools.tool_config.enable_reasoning_desc') }}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <SavedMessage :watch="[sparkleTemperature, sparkleReasoningEnabled]" />
               </div>
-              <Text
-                display="block"
-                color="secondary"
-                size="xs"
-              >
-                {{ t('settings.writing_tools.tool_config.sparkle.description') }}
-              </Text>
             </div>
           </div>
         </div>
@@ -151,6 +338,7 @@
 import { Ref, watch } from 'vue'
 
 import Checkbox from '@/components/Checkbox.vue'
+import Input from '@/components/Input.vue'
 import Text from '@/components/ui/Text.vue'
 import WarningMessage from '@/components/WarningMessage.vue'
 import { useTimeoutValue } from '@/composables/useTimeoutValue'
@@ -159,6 +347,7 @@ import { getUserConfig } from '@/utils/user-config'
 
 import Block from '../Block.vue'
 import BlockTitle from '../BlockTitle.vue'
+import SavedMessage from '../SavedMessage.vue'
 
 const { t } = useI18n()
 
@@ -169,6 +358,16 @@ const enableProofread = userConfig.writingTools.proofread.enable.toRef()
 const enableRewrite = userConfig.writingTools.rewrite.enable.toRef()
 const enableList = userConfig.writingTools.list.enable.toRef()
 const enableSparkle = userConfig.writingTools.sparkle.enable.toRef()
+
+const rewriteTemperature = userConfig.writingTools.rewrite.temperature.toRef()
+const proofreadTemperature = userConfig.writingTools.proofread.temperature.toRef()
+const listTemperature = userConfig.writingTools.list.temperature.toRef()
+const sparkleTemperature = userConfig.writingTools.sparkle.temperature.toRef()
+
+const rewriteReasoningEnabled = userConfig.writingTools.rewrite.reasoningEnabled.toRef()
+const proofreadReasoningEnabled = userConfig.writingTools.proofread.reasoningEnabled.toRef()
+const listReasoningEnabled = userConfig.writingTools.list.reasoningEnabled.toRef()
+const sparkleReasoningEnabled = userConfig.writingTools.sparkle.reasoningEnabled.toRef()
 
 const { value: rewriteErrorMessage, setValue: setRewriteErrorMessage } = useTimeoutValue<string | undefined>(undefined, undefined, 4000)
 const { value: proofreadErrorMessage, setValue: setProofreadErrorMessage } = useTimeoutValue<string | undefined>(undefined, undefined, 4000)

@@ -25,7 +25,7 @@ export const normalizeReasoningEffort = (value: unknown): ReasoningEffort => {
 }
 
 export const normalizeReasoningPreference = (value: StoredReasoningPreference): ReasoningPreference => {
-  if (!value) return { ...DEFAULT_REASONING_PREFERENCE }
+  if (value === undefined) return { ...DEFAULT_REASONING_PREFERENCE }
   if (typeof value === 'boolean') {
     return {
       enabled: value,

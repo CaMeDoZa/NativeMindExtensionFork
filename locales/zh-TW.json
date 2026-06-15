@@ -299,7 +299,11 @@
           "description": "添加表情符號和視覺元素",
           "title": "美化"
         },
-        "title": "工具配置"
+        "title": "工具配置",
+        "temperature": "Temperature",
+        "temperature_desc": "Controls randomness (0 = deterministic, 1 = creative). Recommended: 0.3 for writing, 0.7 for creative tasks",
+        "enable_reasoning": "Enable deep thinking / reasoning",
+        "enable_reasoning_desc": "Small local models may hang with reasoning enabled. Keep disabled for Writing Tools"
       }
     },
     "chat": {
